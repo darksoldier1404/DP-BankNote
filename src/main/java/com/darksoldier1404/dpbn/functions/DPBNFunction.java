@@ -19,7 +19,7 @@ public class DPBNFunction {
     private static final Banknote plugin = getInstance();
 
     public static void editBanknoteItem(Player p) {
-        DInventory inv = new DInventory("Banknote Item Editor", 27, plugin);
+        DInventory inv = new DInventory(plugin.getLang().get("banknote_item_editor"), 27, plugin);
         ItemStack pane = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta im = pane.getItemMeta();
         im.setDisplayName(" ");
@@ -37,23 +37,23 @@ public class DPBNFunction {
 
     public static void giveBanknoteItem(Player p, double amount, int quantity) {
         if (!isBanknoteItemSet()) {
-            p.sendMessage(plugin.getPrefix() + "§cBanknote item is not set. Please contact an administrator.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("banknote_item_not_set"));
             return;
         }
         if (amount <= 0) {
-            p.sendMessage(plugin.getPrefix() + "§cAmount must be greater than 0.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("amount_greater_than_zero"));
             return;
         }
         if (!MoneyAPI.hasEnoughMoney(p, amount * quantity)) {
-            p.sendMessage(plugin.getPrefix() + "§cYou do not have enough money to get this banknote.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("not_enough_money"));
             return;
         }
         if (isEnableBanknoteAmountLimit() && amount > getMaxBanknoteAmount()) {
-            p.sendMessage(plugin.getPrefix() + "§cThe amount exceeds the maximum limit of §f" + getMaxBanknoteAmount() + "§c per banknote.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("amount_exceeds_limit", String.valueOf(getMaxBanknoteAmount())));
             return;
         }
         if (quantity <= 0) {
-            p.sendMessage(plugin.getPrefix() + "§cQuantity must be at least 1.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("quantity_at_least_one"));
             return;
         }
         ItemStack banknoteItem = getBanknoteItem().clone();
@@ -63,7 +63,7 @@ public class DPBNFunction {
         banknoteItem.setAmount(quantity);
         MoneyAPI.takeMoney(p, amount * quantity);
         p.getInventory().addItem(banknoteItem);
-        p.sendMessage(plugin.getPrefix() + "§aYou have received §f" + quantity + "§a banknote(s) worth §f" + amount + "§a each.");
+        p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("received_banknotes", String.valueOf(quantity), String.valueOf(amount)));
     }
 
     public static ItemStack getBanknoteItem() {

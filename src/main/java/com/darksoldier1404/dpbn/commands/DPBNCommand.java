@@ -14,13 +14,13 @@ public class DPBNCommand {
     private static final CommandBuilder builder = new CommandBuilder(plugin);
 
     public static void init() {
-        builder.beginSubCommand("item", "/dpbn item - set the banknote item")
+        builder.beginSubCommand("item", plugin.getLang().get("command_item_description"))
                 .withPermission("dpbn.admin")
                 .executesPlayer((p, args) -> {
                     DPBNFunction.editBanknoteItem(p);
                     return true;
                 });
-        builder.beginSubCommand("get", "/dpbn get <amount> (quantity)")
+        builder.beginSubCommand("get", plugin.getLang().get("command_get_description"))
                 .withPermission("dpbn.use")
                 .withArgument(ArgumentIndex.ARG_0, ArgumentType.DOUBLE, plugin.getConfig().getDoubleList("Settings.SuggestedAmounts"))
                 .withOptionalArgument(ArgumentIndex.ARG_1, ArgumentType.INTEGER)
@@ -30,11 +30,11 @@ public class DPBNCommand {
                     DPBNFunction.giveBanknoteItem(p, price, quantity);
                     return true;
                 });
-        builder.beginSubCommand("reload", "/dpbn reload - reload the config")
+        builder.beginSubCommand("reload", plugin.getLang().get("command_reload_description"))
                 .withPermission("dpbn.admin")
                 .executes((sender, args) -> {
                     plugin.reload();
-                    sender.sendMessage(plugin.getPrefix() + "§aConfiguration reloaded.");
+                    sender.sendMessage(plugin.getPrefix() + plugin.getLang().get("config_reloaded"));
                     return true;
                 });
         builder.build("dpbn");

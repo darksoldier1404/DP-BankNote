@@ -15,7 +15,7 @@ public class Banknote extends DPlugin {
     }
 
     public Banknote() {
-        super(false);
+        super(true);
         plugin = this;
         init();
     }

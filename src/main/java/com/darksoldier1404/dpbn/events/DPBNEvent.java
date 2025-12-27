@@ -26,7 +26,7 @@ public class DPBNEvent implements Listener {
             ItemStack banknoteItem = inv.getItem(13);
             plugin.getConfig().set("Settings.BanknoteItem", banknoteItem);
             plugin.saveConfig();
-            p.sendMessage(plugin.getPrefix() + "§aBanknote item has been updated.");
+            p.sendMessage(plugin.getPrefix() + plugin.getLang().get("banknote_item_updated"));
         }
     }
 
@@ -44,6 +44,6 @@ public class DPBNEvent implements Listener {
         int itemAmount = item.getAmount();
         item.setAmount(itemAmount - 1);
         MoneyAPI.addMoney(p, amount);
-        p.sendMessage(plugin.getPrefix() + "§aYou have redeemed a banknote worth §f" + amount + "§a.");
+        p.sendMessage(plugin.getPrefix() + plugin.getLang().getWithArgs("banknote_redeemed", String.valueOf(amount)));
     }
 }
